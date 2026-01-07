@@ -1,0 +1,19 @@
+# dependencies
+node_modules
+
+# build output
+dist
+build
+.vite
+
+# env
+.env
+.env.*
+
+# coverage & reports
+coverage
+playwright-report
+
+# OS / IDE
+.DS_Store
+.idea
