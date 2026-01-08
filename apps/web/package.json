@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@acme/contracts": "workspace:*",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "swr": "^2.3.8"
+    "swr": "^2.3.8",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

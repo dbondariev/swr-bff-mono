@@ -1,8 +1,5 @@
+import { UsersPage } from "./features/users/UsersPage";
 
-function App() {
-  return (
-<div>hello world</div>
-  )
+export default function App() {
+  return <UsersPage />;
 }
-
-export default App
