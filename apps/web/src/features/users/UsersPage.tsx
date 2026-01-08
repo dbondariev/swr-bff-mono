@@ -100,7 +100,6 @@ export function UsersPage() {
     const id = selectedUser.id;
     const currentUsers = usersQuery.data?.users ?? [];
 
-    // Find the next user to select after deletion
     const currentIndex = currentUsers.findIndex(u => u.id === id);
     const nextUser = currentUsers[currentIndex + 1] || currentUsers[currentIndex - 1] || null;
 
@@ -120,10 +119,8 @@ export function UsersPage() {
         }
       );
 
-      // Update selected ID to next available user
       setSelectedId(nextUser?.id ?? null);
 
-      // Force refresh of the user query
       await userQuery.mutate();
     } catch (error) {
       console.error('Delete failed:', error);

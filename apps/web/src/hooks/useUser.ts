@@ -12,6 +12,11 @@ export function useUser(id: string | null) {
       const parsed = data as { user: unknown };
       const user = UserSchema.parse(parsed.user);
       return { user };
+    },
+    {
+      revalidateOnFocus: false,
+      refreshInterval: 0,
+      dedupingInterval: 15000,
     }
   );
 }

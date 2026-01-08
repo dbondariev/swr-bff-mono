@@ -1,142 +1,235 @@
 {
   "users": [
     {
-      "id": "5",
-      "name": "Chelsey Dietrich",
-      "username": "Kamren",
-      "email": "Lucio_Hettinger@annie.ca",
+      "id": "1",
+      "name": "Alice Johnson",
+      "username": "alice_j",
+      "email": "alice.johnson@email.com",
       "address": {
-        "street": "Skiles Walks",
-        "suite": "Suite 351",
-        "city": "Roscoeview",
-        "zipcode": "33263",
+        "street": "Maple Street",
+        "suite": "Apt. 101",
+        "city": "New York",
+        "zipcode": "10001",
         "geo": {
-          "lat": "-31.8129",
-          "lng": "62.5342"
+          "lat": "40.7128",
+          "lng": "-74.0060"
         }
       },
-      "phone": "(254)954-1289",
-      "website": "demarco.info",
+      "phone": "555-0101",
+      "website": "alicejohnson.com",
       "company": {
-        "name": "Keebler LLC",
-        "catchPhrase": "User-centric fault-tolerant solution",
-        "bs": "revolutionize end-to-end systems"
+        "name": "Tech Solutions Inc",
+        "catchPhrase": "Innovation at your fingertips",
+        "bs": "revolutionize digital experiences"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "username": "bob_smith",
+      "email": "bob.smith@email.com",
+      "address": {
+        "street": "Oak Avenue",
+        "suite": "Suite 202",
+        "city": "Los Angeles",
+        "zipcode": "90210",
+        "geo": {
+          "lat": "34.0522",
+          "lng": "-118.2437"
+        }
+      },
+      "phone": "555-0202",
+      "website": "bobsmith.net",
+      "company": {
+        "name": "Creative Designs LLC",
+        "catchPhrase": "Design beyond imagination",
+        "bs": "transform creative visions"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Carol Williams",
+      "username": "carol_w",
+      "email": "carol.williams@email.com",
+      "address": {
+        "street": "Pine Road",
+        "suite": "Unit 303",
+        "city": "Chicago",
+        "zipcode": "60601",
+        "geo": {
+          "lat": "41.8781",
+          "lng": "-87.6298"
+        }
+      },
+      "phone": "555-0303",
+      "website": "carolwilliams.org",
+      "company": {
+        "name": "Global Marketing Corp",
+        "catchPhrase": "Connect the world through marketing",
+        "bs": "optimize marketing strategies"
+      }
+    },
+    {
+      "id": "4",
+      "name": "David Brown",
+      "username": "david_brown",
+      "email": "david.brown@email.com",
+      "address": {
+        "street": "Cedar Lane",
+        "suite": "Floor 4",
+        "city": "Houston",
+        "zipcode": "77001",
+        "geo": {
+          "lat": "29.7604",
+          "lng": "-95.3698"
+        }
+      },
+      "phone": "555-0404",
+      "website": "davidbrown.io",
+      "company": {
+        "name": "Energy Dynamics",
+        "catchPhrase": "Powering the future",
+        "bs": "harness sustainable energy"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Emma Davis",
+      "username": "emma_d",
+      "email": "emma.davis@email.com",
+      "address": {
+        "street": "Birch Boulevard",
+        "suite": "Penthouse A",
+        "city": "Phoenix",
+        "zipcode": "85001",
+        "geo": {
+          "lat": "33.4484",
+          "lng": "-112.0740"
+        }
+      },
+      "phone": "555-0505",
+      "website": "emmadavis.dev",
+      "company": {
+        "name": "Software Innovations",
+        "catchPhrase": "Code the impossible",
+        "bs": "develop cutting-edge software"
       }
     },
     {
       "id": "6",
-      "name": "Mrs. Dennis Schulist",
-      "username": "Leopoldo_Corkery",
-      "email": "Karley_Dach@jasper.info",
+      "name": "Frank Miller",
+      "username": "frank_m",
+      "email": "frank.miller@email.com",
       "address": {
-        "street": "Norberto Crossing",
-        "suite": "Apt. 950",
-        "city": "South Christy",
-        "zipcode": "23505-1337",
+        "street": "Elm Circle",
+        "suite": "Building B",
+        "city": "Philadelphia",
+        "zipcode": "19101",
         "geo": {
-          "lat": "-71.4197",
-          "lng": "71.7478"
+          "lat": "39.9526",
+          "lng": "-75.1652"
         }
       },
-      "phone": "1-477-935-8478 x6430",
-      "website": "ola.org",
+      "phone": "555-0606",
+      "website": "frankmiller.biz",
       "company": {
-        "name": "Considine-Lockman",
-        "catchPhrase": "Synchronised bottom-line interface",
-        "bs": "e-enable innovative applications"
+        "name": "Financial Advisors Group",
+        "catchPhrase": "Secure your financial future",
+        "bs": "optimize financial portfolios"
       }
     },
     {
       "id": "7",
-      "name": "Kurtis Weissnat",
-      "username": "Elwyn.Skiles",
-      "email": "Telly.Hoeger@billy.biz",
+      "name": "Grace Wilson",
+      "username": "grace_w",
+      "email": "grace.wilson@email.com",
       "address": {
-        "street": "Rex Trail",
-        "suite": "Suite 280",
-        "city": "Howemouth",
-        "zipcode": "58804-1099",
+        "street": "Willow Way",
+        "suite": "Loft 7",
+        "city": "San Antonio",
+        "zipcode": "78201",
         "geo": {
-          "lat": "24.8918",
-          "lng": "21.8984"
+          "lat": "29.4241",
+          "lng": "-98.4936"
         }
       },
-      "phone": "210.067.6132",
-      "website": "elvis.io",
+      "phone": "555-0707",
+      "website": "gracewilson.co",
       "company": {
-        "name": "Johns Group",
-        "catchPhrase": "Configurable multimedia task-force",
-        "bs": "generate enterprise e-tailers"
+        "name": "Healthcare Solutions",
+        "catchPhrase": "Health is wealth",
+        "bs": "revolutionize healthcare delivery"
       }
     },
     {
       "id": "8",
-      "name": "Nicholas Runolfsdottir V",
-      "username": "Maxime_Nienow",
-      "email": "Sherwood@rosamond.me",
+      "name": "Henry Taylor",
+      "username": "henry_t",
+      "email": "henry.taylor@email.com",
       "address": {
-        "street": "Ellsworth Summit",
-        "suite": "Suite 729",
-        "city": "Aliyaview",
-        "zipcode": "45169",
+        "street": "Spruce Street",
+        "suite": "Office 8",
+        "city": "San Diego",
+        "zipcode": "92101",
         "geo": {
-          "lat": "-14.3990",
-          "lng": "-120.7677"
+          "lat": "32.7157",
+          "lng": "-117.1611"
         }
       },
-      "phone": "586.493.6943 x140",
-      "website": "jacynthe.com",
+      "phone": "555-0808",
+      "website": "henrytaylor.tech",
       "company": {
-        "name": "Abernathy Group",
-        "catchPhrase": "Implemented secondary concept",
-        "bs": "e-enable extensible e-tailers"
+        "name": "Education Tech",
+        "catchPhrase": "Learn without limits",
+        "bs": "transform educational experiences"
       }
     },
     {
       "id": "9",
-      "name": "Glenna Reichert",
-      "username": "Delphine",
-      "email": "Chaim_McDermott@dana.io",
+      "name": "Ivy Anderson",
+      "username": "ivy_a",
+      "email": "ivy.anderson@email.com",
       "address": {
-        "street": "Dayna Park",
-        "suite": "Suite 449",
-        "city": "Bartholomebury",
-        "zipcode": "76495-3109",
+        "street": "Poplar Place",
+        "suite": "Studio 9",
+        "city": "Dallas",
+        "zipcode": "75201",
         "geo": {
-          "lat": "24.6463",
-          "lng": "-168.8889"
+          "lat": "32.7767",
+          "lng": "-96.7970"
         }
       },
-      "phone": "(775)976-6794 x41206",
-      "website": "conrad.com",
+      "phone": "555-0909",
+      "website": "ivyanderson.art",
       "company": {
-        "name": "Yost and Sons",
-        "catchPhrase": "Switchable contextually-based project",
-        "bs": "aggregate real-time technologies"
+        "name": "Creative Arts Studio",
+        "catchPhrase": "Art speaks louder than words",
+        "bs": "inspire through artistic expression"
       }
     },
     {
       "id": "10",
-      "name": "Clementina DuBuque",
-      "username": "Moriah.Stanton",
-      "email": "Rey.Padberg@karina.biz",
+      "name": "Jack Thompson",
+      "username": "jack_t",
+      "email": "jack.thompson@email.com",
       "address": {
-        "street": "Kattie Turnpike",
-        "suite": "Suite 198",
-        "city": "Lebsackbury",
-        "zipcode": "31428-2261",
+        "street": "Cypress Court",
+        "suite": "Room 10",
+        "city": "San Jose",
+        "zipcode": "95101",
         "geo": {
-          "lat": "-38.2386",
-          "lng": "57.2232"
+          "lat": "37.3382",
+          "lng": "-121.8863"
         }
       },
-      "phone": "024-648-3804",
-      "website": "ambrose.net",
+      "phone": "555-1010",
+      "website": "jackthompson.pro",
       "company": {
-        "name": "Hoeger LLC",
-        "catchPhrase": "Centralized empowering task-force",
-        "bs": "target end-to-end models"
+        "name": "Tech Consulting Group",
+        "catchPhrase": "Technology made simple",
+        "bs": "streamline business operations"
       }
     }
   ]
 }
+
