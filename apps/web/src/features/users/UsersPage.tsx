@@ -9,7 +9,7 @@ import {UserDialog} from "./UserDialog";
 import {api} from "../../api/client";
 
 type UserResponse = { user: User };
-type DeleteResponse = { ok: true };
+type DeleteResponse = { success: boolean };
 
 export function UsersPage() {
   const [selectedId, setSelectedId] = useState<string | null>("1");
@@ -98,28 +98,36 @@ export function UsersPage() {
   async function handleDelete() {
     if (!selectedUser) return;
     const id = selectedUser.id;
+    const currentUsers = usersQuery.data?.users ?? [];
 
-    await usersQuery.mutate(
-      async (current) => {
-        await api<DeleteResponse>(`/api/users/${id}`, { method: "DELETE" });
-        return { users: (current?.users ?? []).filter((u) => u.id !== id) };
-      },
-      {
-        optimisticData: (current) => ({
-          users: (current?.users ?? []).filter((u) => u.id !== id),
-        }),
-        rollbackOnError: true,
-        populateCache: true,
-        revalidate: false,
-      }
-    );
+    // Find the next user to select after deletion
+    const currentIndex = currentUsers.findIndex(u => u.id === id);
+    const nextUser = currentUsers[currentIndex + 1] || currentUsers[currentIndex - 1] || null;
 
-    setSelectedId((prev) => {
-      if (prev !== id) return prev;
-      return usersQuery.data?.users?.find((u) => u.id !== id)?.id ?? null;
-    });
+    try {
+      await usersQuery.mutate(
+        async (current) => {
+          await api<DeleteResponse>(`/api/users/${id}`, { method: "DELETE" });
+          return { users: (current?.users ?? []).filter((u) => u.id !== id) };
+        },
+        {
+          optimisticData: (current) => ({
+            users: (current?.users ?? []).filter((u) => u.id !== id),
+          }),
+          rollbackOnError: true,
+          populateCache: true,
+          revalidate: true,
+        }
+      );
 
-    await userQuery.mutate();
+      // Update selected ID to next available user
+      setSelectedId(nextUser?.id ?? null);
+
+      // Force refresh of the user query
+      await userQuery.mutate();
+    } catch (error) {
+      console.error('Delete failed:', error);
+    }
   }
 
   return (

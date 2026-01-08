@@ -102,7 +102,7 @@ fastify.delete('/api/users/:id', async (request, reply) => {
       return reply.status(response.status).send({ error: 'Failed to delete user' });
     }
 
-    return reply.status(204).send();
+    return { success: true };
   } catch (error) {
     return reply.status(500).send({ error: 'Internal server error' });
   }
