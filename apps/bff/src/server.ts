@@ -1,17 +1,12 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 
 const fastify = Fastify({ logger: true });
 
-// Enable CORS for all routes
-fastify.addHook('onRequest', async (request, reply) => {
-  reply.header('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://swr-bff-mono.vercel.app' : 'http://localhost:5173');
-  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  reply.header('Access-Control-Allow-Credentials', 'true');
-
-  if (request.method === 'OPTIONS') {
-    return reply.code(200).send();
-  }
+// Register CORS plugin
+await fastify.register(cors, {
+  origin: process.env.NODE_ENV === 'production' ? 'https://swr-bff-mono.vercel.app' : 'http://localhost:5173',
+  credentials: true
 });
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3002';
@@ -30,7 +25,8 @@ fastify.get('/api/users', async (request, reply) => {
       return reply.status(response.status).send({ error: 'Failed to fetch users' });
     }
 
-    return await response.json();
+    const users = await response.json();
+    return { users };
   } catch (error) {
     return reply.status(500).send({ error: 'Internal server error' });
   }
@@ -46,7 +42,8 @@ fastify.get('/api/users/:id', async (request, reply) => {
       return reply.status(response.status).send({ error: 'User not found' });
     }
 
-    return await response.json();
+    const user = await response.json();
+    return { user };
   } catch (error) {
     return reply.status(500).send({ error: 'Internal server error' });
   }
@@ -66,7 +63,7 @@ fastify.post('/api/users', async (request, reply) => {
     }
 
     const user = await response.json();
-    return reply.status(201).send(user);
+    return reply.status(201).send({ user });
   } catch (error) {
     return reply.status(500).send({ error: 'Internal server error' });
   }
@@ -86,7 +83,8 @@ fastify.put('/api/users/:id', async (request, reply) => {
       return reply.status(response.status).send({ error: 'Failed to update user' });
     }
 
-    return await response.json();
+    const user = await response.json();
+    return { user };
   } catch (error) {
     return reply.status(500).send({ error: 'Internal server error' });
   }

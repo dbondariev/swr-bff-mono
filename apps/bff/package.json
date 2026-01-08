@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@acme/contracts": "workspace:*",
+    "@fastify/cors": "^11.2.0",
     "fastify": "^5.0.0",
     "zod": "^3.25.76"
   },
