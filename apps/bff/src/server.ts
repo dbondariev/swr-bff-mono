@@ -1,176 +1,125 @@
-import Fastify from "fastify";
-import {
-  UserSchema,
-  UsersSchema,
-  UserCreateSchema,
-  UserUpdateSchema,
-} from "@acme/contracts";
-import { ZodError } from "zod";
+import Fastify from 'fastify';
 
-const app = Fastify({ logger: true });
+const fastify = Fastify({ logger: true });
 
-const UPSTREAM_BASE_URL =
-  process.env.UPSTREAM_BASE_URL ?? "http://localhost:3002";
+// Enable CORS for all routes
+fastify.addHook('onRequest', async (request, reply) => {
+  reply.header('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://swr-bff-mono.vercel.app' : 'http://localhost:5173');
+  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  reply.header('Access-Control-Allow-Credentials', 'true');
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-app.get("/health", async () => ({ ok: true }));
-
-app.get("/api/users", async (_req, reply) => {
-  await sleep(300);
-
-  try {
-    const res = await fetch(`${UPSTREAM_BASE_URL}/users`);
-
-    if (!res.ok) {
-      return reply.code(502).send({
-        error: "UPSTREAM_ERROR",
-        upstreamStatus: res.status,
-      });
-    }
-
-    const json = await res.json();
-    const users = UsersSchema.parse(json);
-
-    return reply.send({ users });
-  } catch (err) {
-    if (err instanceof ZodError) {
-      return reply.code(502).send({
-        error: "UPSTREAM_INVALID_RESPONSE",
-        issues: err.issues,
-      });
-    }
-
-    return reply.code(500).send({ error: "INTERNAL_SERVER_ERROR" });
+  if (request.method === 'OPTIONS') {
+    return reply.code(200).send();
   }
 });
 
-app.get("/api/users/:id", async (req, reply) => {
-  await sleep(200);
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3002';
 
-  const { id } = req.params as { id: string };
+// Health check
+fastify.get('/health', async () => {
+  return { status: 'ok', timestamp: new Date().toISOString() };
+});
 
+// Get all users
+fastify.get('/api/users', async (request, reply) => {
   try {
-    const res = await fetch(`${UPSTREAM_BASE_URL}/users/${id}`);
+    const response = await fetch(`${API_BASE_URL}/users`);
 
-    if (!res.ok) {
-      return reply.code(502).send({
-        error: "UPSTREAM_ERROR",
-        upstreamStatus: res.status,
-      });
+    if (!response.ok) {
+      return reply.status(response.status).send({ error: 'Failed to fetch users' });
     }
 
-    const json = await res.json();
-    const user = UserSchema.parse(json);
-
-    return reply.send({ user });
-  } catch (err) {
-    if (err instanceof ZodError) {
-      return reply.code(502).send({
-        error: "UPSTREAM_INVALID_RESPONSE",
-        issues: err.issues,
-      });
-    }
-
-    return reply.code(500).send({ error: "INTERNAL_SERVER_ERROR" });
+    return await response.json();
+  } catch (error) {
+    return reply.status(500).send({ error: 'Internal server error' });
   }
 });
 
-app.post("/api/users", async (req, reply) => {
-  await sleep(200);
-
+// Get user by ID
+fastify.get('/api/users/:id', async (request, reply) => {
   try {
-    const body = UserCreateSchema.parse(req.body);
+    const { id } = request.params as { id: string };
+    const response = await fetch(`${API_BASE_URL}/users/${id}`);
 
-    const res = await fetch(`${UPSTREAM_BASE_URL}/users`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
+    if (!response.ok) {
+      return reply.status(response.status).send({ error: 'User not found' });
+    }
+
+    return await response.json();
+  } catch (error) {
+    return reply.status(500).send({ error: 'Internal server error' });
+  }
+});
+
+// Create user
+fastify.post('/api/users', async (request, reply) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request.body)
     });
 
-    if (!res.ok) {
-      return reply.code(502).send({
-        error: "UPSTREAM_ERROR",
-        upstreamStatus: res.status,
-      });
+    if (!response.ok) {
+      return reply.status(response.status).send({ error: 'Failed to create user' });
     }
 
-    const json = await res.json();
-    const user = UserSchema.parse(json);
-
-    return reply.send({ user });
-  } catch (err) {
-    if (err instanceof ZodError) {
-      return reply.code(400).send({
-        error: "VALIDATION_ERROR",
-        issues: err.issues,
-      });
-    }
-
-    return reply.code(500).send({ error: "INTERNAL_SERVER_ERROR" });
+    const user = await response.json();
+    return reply.status(201).send(user);
+  } catch (error) {
+    return reply.status(500).send({ error: 'Internal server error' });
   }
 });
 
-app.put("/api/users/:id", async (req, reply) => {
-  await sleep(200);
-
-  const { id } = req.params as { id: string };
-
+// Update user
+fastify.put('/api/users/:id', async (request, reply) => {
   try {
-    const body = UserUpdateSchema.parse(req.body);
-
-    const res = await fetch(`${UPSTREAM_BASE_URL}/users/${id}`, {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ id, ...body }),
+    const { id } = request.params as { id: string };
+    const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request.body)
     });
 
-    if (!res.ok) {
-      return reply.code(502).send({
-        error: "UPSTREAM_ERROR",
-        upstreamStatus: res.status,
-      });
+    if (!response.ok) {
+      return reply.status(response.status).send({ error: 'Failed to update user' });
     }
 
-    const json = await res.json();
-    const user = UserSchema.parse(json);
+    return await response.json();
+  } catch (error) {
+    return reply.status(500).send({ error: 'Internal server error' });
+  }
+});
 
-    return reply.send({ user });
+// Delete user
+fastify.delete('/api/users/:id', async (request, reply) => {
+  try {
+    const { id } = request.params as { id: string };
+    const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      return reply.status(response.status).send({ error: 'Failed to delete user' });
+    }
+
+    return reply.status(204).send();
+  } catch (error) {
+    return reply.status(500).send({ error: 'Internal server error' });
+  }
+});
+
+// Start the server
+const start = async () => {
+  try {
+    const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
+    await fastify.listen({ port, host: '0.0.0.0' });
+    console.log(`BFF Server running on port ${port}`);
   } catch (err) {
-    if (err instanceof ZodError) {
-      return reply.code(400).send({
-        error: "VALIDATION_ERROR",
-        issues: err.issues,
-      });
-    }
-
-    return reply.code(500).send({ error: "INTERNAL_SERVER_ERROR" });
+    fastify.log.error(err);
+    process.exit(1);
   }
-});
+};
 
-app.delete("/api/users/:id", async (req, reply) => {
-  await sleep(200);
-
-  const { id } = req.params as { id: string };
-
-  const res = await fetch(`${UPSTREAM_BASE_URL}/users/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!res.ok) {
-    return reply.code(502).send({
-      error: "UPSTREAM_ERROR",
-      upstreamStatus: res.status,
-    });
-  }
-
-  return reply.send({ ok: true });
-});
-
-const PORT = Number(process.env.PORT ?? 3001);
-
-app.listen({ port: PORT, host: "0.0.0.0" }).catch(() => {
-  process.exit(1);
-});
+start();
